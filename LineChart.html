@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LineChart</title>
+    <script src="js/lib/echarts.js"></script>
+    <script src="d3.js"></script>
+</head>
+<body>
+<div id="main" style="width: 32.5%;height:300px;"></div>
+<script type="text/javascript">
+    d3.csv("NO2(微克每立方米)_20130101-20130109.csv").then(function(noData){
+        let NOdata =noData.map(function (d) {
+            return [+d["1"], +d["2"], +d["3"], +d["4"], +d["5"], +d["6"], +d["7"], +d["8"], +d["9"], +d["10"], +d["11"], +d["12"], +d["13"], +d["14"], +d["15"], +d["16"], +d["17"], +d["18"], +d["19"], +d["20"], ];
+        });
+        d3.csv("CO(毫克每立方米)_20130101-20130109.csv").then(function(coData){
+            let COdata =coData.map(function (d) {
+                return [+d["1"], +d["2"], +d["3"], +d["4"], +d["5"], +d["6"], +d["7"], +d["8"], +d["9"], +d["10"], +d["11"], +d["12"], +d["13"], +d["14"], +d["15"], +d["16"], +d["17"], +d["18"], +d["19"], +d["20"], ];
+            });
+            d3.csv("O3(微克每立方米)_20130101-20130109.csv").then(function(oData){
+                let Odata =oData.map(function (d) {
+                    return [+d["1"], +d["2"], +d["3"], +d["4"], +d["5"], +d["6"], +d["7"], +d["8"], +d["9"], +d["10"], +d["11"], +d["12"], +d["13"], +d["14"], +d["15"], +d["16"], +d["17"], +d["18"], +d["19"], +d["20"], ];
+                });
+                d3.csv("PM10(微克每立方米)_20130101-20130109.csv").then(function(pmData){
+                    let PMdata =oData.map(function (d) {
+                        return [+d["1"], +d["2"], +d["3"], +d["4"], +d["5"], +d["6"], +d["7"], +d["8"], +d["9"], +d["10"], +d["11"], +d["12"], +d["13"], +d["14"], +d["15"], +d["16"], +d["17"], +d["18"], +d["19"], +d["20"], ];
+                    });
+                    console.log(Odata[0])
+                let myChart = echarts.init(document.getElementById('main'));
+                myChart.setOption(option = {
+
+                    color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+                    title: {
+                        text: '横向对比图'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
+                        }
+                    },
+                    legend: {
+                        data: ['NO2', 'CO', 'O3', 'PM10'],
+                        padding: 5
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+
+                    dataZoom: [{
+                        startValue: '1'
+                    }, {
+                        type: 'inside'
+                    }],
+                    series: [
+                        {
+                            name: 'NO',
+                            type: 'line',
+                            stack: '微克每立方米',
+                            smooth: true,
+                            lineStyle: {
+                                width: 0
+                            },
+                            showSymbol: false,
+                            areaStyle: {
+                                opacity: 0.8,
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(128, 255, 165)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(1, 191, 236)'
+                                }])
+                            },
+                            dataZoom: [{
+                                startValue: '1'
+                            }, {
+                                type: 'inside'
+                            }],
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: NOdata[0]
+                        },
+                        {
+                            name: 'CO',
+                            type: 'line',
+                            stack: '毫克每立方米',
+                            smooth: true,
+                            lineStyle: {
+                                width: 0
+                            },
+                            showSymbol: false,
+                            areaStyle: {
+                                opacity: 0.8,
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(0, 221, 255)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(77, 119, 255)'
+                                }])
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: COdata[0]
+                        },
+                        {
+                            name: 'O3',
+                            type: 'line',
+                            stack: '微克每立方米',
+                            smooth: true,
+                            lineStyle: {
+                                width: 0
+                            },
+                            showSymbol: false,
+                            areaStyle: {
+                                opacity: 0.8,
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(55, 162, 255)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(116, 21, 219)'
+                                }])
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: Odata[0]
+                        },
+                        {
+                            name: 'PM10',
+                            type: 'line',
+                            stack: '微克每立方米',
+                            smooth: true,
+                            lineStyle: {
+                                width: 0
+                            },
+                            showSymbol: false,
+                            areaStyle: {
+                                opacity: 0.8,
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(255, 0, 135)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(135, 0, 157)'
+                                }])
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            data: PMdata[0]
+                        }
+                    ]
+                });
+                })
+            })
+        })
+    })
+
+</script>
+</body>
+</html>
